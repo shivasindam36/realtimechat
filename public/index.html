@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        
+     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6945450279455881"
+     crossorigin="anonymous"></script>
+
+        
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Chat APP</title>
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body onload="askUser()">
+        <center><img src="https://1000logos.net/wp-content/uploads/2017/08/Snapchat-Logo-2013.png" alt="" class="logo"></center>
+        <h1 class="mainHeading"><i><b>Real time Chatting Application using Node</b></i></h1>
+        <div class="tellname" id="tellname">
+            <p id="pname"></p>
+        </div>
+        <div id="messages" class="container">
+            <!-- <div class="mRight">
+                <p class="mRightP">Real time Chatting Application using Node</p>
+            </div>
+            <div class="mLeft">
+                <p class="mLeftP">Real time Chatting Application using Node</p>
+            </div> -->
+        </div>
+
+        <center>
+            <div class="sendingarea">
+                <input type="text" id="message" placeholder="Enter Message"
+                    class="textarea" />
+                <button id="sendBtn" class="buttonsend" onclick="rightpothadi()">Send</button>
+            </div>
+        </center>
+        <script src="/socket.io/socket.io.js"></script>
+        
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script> -->
+        <script>
+      const usernameN = prompt("Enter You are Name:") 
+      const socket = io();
+      const sendBtn = document.getElementById("sendBtn");
+      const messageInput = document.getElementById("message");
+      const allMessages = document.getElementById("messages");
+      const namearea = document.getElementById("tellname");
+
+// Ask for user's name
+// window.onload = aksUser();
+    
+
+const p4 = document.getElementById("pname");
+p4.innerText =  usernameN;
+// Emit the username to the server
+socket.emit('username', usernameN);
+game =true;
+let uName;
+// Listen for incoming messages from the server
+socket.on('username', (username) => {
+    // Display the message
+    alert(username + " has joined");
+});
+// const uName = gameN();
+socket.on('message', (message) => {
+        const newDiv = document.createElement("div");
+        newDiv.setAttribute("class", "mLeft");
+        const p1 = document.createElement("p");
+        p1.setAttribute("class", "mLeftP");
+        allMessages.appendChild(newDiv);
+        newDiv.appendChild(p1);
+        p1.innerText =  message;
+    });
+        function rightpothadi(){
+            const message = messageInput.value;
+            const newDiv2 = document.createElement("div");
+            newDiv2.setAttribute("class", "mRight");
+            allMessages.appendChild(newDiv2);
+            const p2 = document.createElement("p");
+            p2.setAttribute("class", "mRightP");
+            newDiv2.appendChild(p2);
+            p2.innerText = usernameN + " : " + message;
+        }
+      sendBtn.addEventListener("click", (e) => {
+        const message = usernameN + " : " + messageInput.value;
+        console.log(message);
+        // socket.emit("user-message", message);
+        function sendMessage(message) {
+            socket.emit("user-message", message);
+        }
+        sendMessage(message);
+        messageInput.value="";
+      }); 
+
+    </script>
+    </body>
+</html>
